@@ -3,14 +3,28 @@
 {% block title %}Crear Nueva Vacante - My Company{% endblock %}
 
 {% block extra_js %}
-  <script src='https://cdn.tiny.cloud/1/YOUR_API_KEY/tinymce/5/tinymce.min.js' referrerpolicy="origin"></script>
+  <!-- CKEditor 5 CDN -->
+  <script src="https://cdn.ckeditor.com/ckeditor5/39.0.1/classic/ckeditor.js"></script>
   <script>
-    tinymce.init({
-      selector: '#detalle',
-      plugins: "textcolor, table",
-      toolbar: "styleselect | undo redo | removeformat | bold italic underline | table | aligncenter alignjustify | bullist numlist outdent indent | link | print | fontselect fontsizeselect forecolor backcolor",
-      height: 300
-    });
+    ClassicEditor
+      .create(document.querySelector('#detalle'), {
+        toolbar: [
+          'heading', '|',
+          'bold', 'italic', 'underline', '|',
+          'bulletedList', 'numberedList', '|',
+          'alignment', 'outdent', 'indent', '|',
+          'link', 'insertTable', '|',
+          'undo', 'redo', 'removeFormat', '|',
+          'fontColor', 'fontBackgroundColor', 'fontSize', 'fontFamily'
+        ],
+        table: {
+          contentToolbar: ['tableColumn', 'tableRow', 'mergeTableCells']
+        },
+        height: '300px'
+      })
+      .catch(error => {
+        console.error(error);
+      });
   </script>
 {% endblock %}
 

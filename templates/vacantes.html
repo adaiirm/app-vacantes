@@ -34,19 +34,19 @@
         <table class="table table-striped">
           <thead>
             <tr>
-              <th class="left">ID</th>
-              <th>Vacante</th>
-              <th>Publicado</th>                
-              <th>Acciones</th>
+              <th class="text-center">ID</th>
+              <th class="text-center">Vacante</th>
+              <th class="text-center">Publicado</th>                
+              <th class="text-center">Acciones</th>
             </tr>
           </thead>
           <tbody>              
             {% for vacante in vacantes %}
               <tr>
-                <td class="left">{{ vacante.id }}</td>
-                <td>{{ vacante.nombre }}</td>
-                <td>{{ vacante.fecha_publicacion.strftime('%d/%m/%Y') }}</td>
-                <td>
+                <td class="text-center">{{ vacante.id }}</td>
+                <td class="text-center">{{ vacante.nombre }}</td>
+                <td class="text-center">{{ vacante.fecha_publicacion.strftime('%d/%m/%Y') }}</td>
+                <td class="text-center">
                   <a class="btn btn-info btn-sm" href="{{ url_for('detalle_vacante', id=vacante.id) }}" role="button">Ver Detalles</a>
                   {% if 'user_id' in session and session['user_id'] == vacante.usuario_id %}
                     <a class="btn btn-warning btn-sm" href="{{ url_for('nueva_vacante') }}?edit={{ vacante.id }}" role="button">Editar</a>

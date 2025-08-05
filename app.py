@@ -2,12 +2,10 @@ from flask import Flask, render_template, request, redirect, url_for, flash, ses
 from models import db, Usuario, Vacante
 from werkzeug.security import generate_password_hash, check_password_hash
 from datetime import datetime
-from flask_bootstrap import Bootstrap5
 
 import os
 
 app = Flask(__name__)
-bootstrap = Bootstrap5(app)
 app.secret_key = os.urandom(24)
 
 # Configuración de la base de datos
