@@ -1,0 +1,77 @@
+{% extends "base.html" %}
+
+{% block title %}Lista de todas las vacantes{% endblock %}
+
+{% block content %}
+  <!-- The justified navigation menu -->
+  <div class="masthead">
+    <h3 class="text-muted">My Company</h3>
+    <nav>
+      <ul class="nav nav-justified">
+        <li><a href="{{ url_for('index') }}">Inicio</a></li>            
+        <li><a href="{{ url_for('admin') if 'user_id' in session else url_for('login') }}">Administración</a></li>                        
+        <li><a href="{{ url_for('acerca') }}">Acerca</a></li>            
+      </ul>
+    </nav>
+  </div>
+  
+  <form method="get" action="{{ url_for('buscar') }}" class="navbar-form navbar-right">
+    <div class="form-group">
+      <input type="text" name="query" required placeholder="Buscar oferta..." class="form-control" 
+             value="{{ busqueda if busqueda else '' }}">
+    </div>        
+    <button type="submit" class="btn btn-success">Buscar</button>
+  </form>
+  
+  <br><br><br>
+
+  <div class="panel panel-default">
+    <div class="panel-heading">
+      <h3 class="panel-title"><b>Lista de Vacantes</b></h3>
+    </div>
+    <div class="panel-body">
+      {% if vacantes %}
+        <table class="table table-striped">
+          <thead>
+            <tr>
+              <th class="left">ID</th>
+              <th>Vacante</th>
+              <th>Publicado</th>                
+              <th>Acciones</th>
+            </tr>
+          </thead>
+          <tbody>              
+            {% for vacante in vacantes %}
+              <tr>
+                <td class="left">{{ vacante.id }}</td>
+                <td>{{ vacante.nombre }}</td>
+                <td>{{ vacante.fecha_publicacion.strftime('%d/%m/%Y') }}</td>
+                <td>
+                  <a class="btn btn-info btn-sm" href="{{ url_for('detalle_vacante', id=vacante.id) }}" role="button">Ver Detalles</a>
+                  {% if 'user_id' in session and session['user_id'] == vacante.usuario_id %}
+                    <a class="btn btn-warning btn-sm" href="{{ url_for('nueva_vacante') }}?edit={{ vacante.id }}" role="button">Editar</a>
+                    <a class="btn btn-danger btn-sm" href="{{ url_for('eliminar_vacante', id=vacante.id) }}" role="button" onclick="return confirm('¿Estás seguro de eliminar esta vacante?')">Eliminar</a>
+                  {% endif %}
+                </td>  
+              </tr>
+            {% endfor %}
+          </tbody>           
+        </table>
+      {% else %}
+        <div class="alert alert-info">
+          {% if busqueda %}
+            No se encontraron vacantes que coincidan con "{{ busqueda }}"
+          {% else %}
+            No hay vacantes disponibles en este momento.
+          {% endif %}
+        </div>
+      {% endif %}
+      
+      {% if 'user_id' in session %}
+        <div class="text-right">
+          <a href="{{ url_for('nueva_vacante') }}" class="btn btn-success">Crear Nueva Vacante</a>
+        </div>
+      {% endif %}
+    </div>
+  </div>
+{% endblock %}

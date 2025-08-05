@@ -1,0 +1,61 @@
+{% extends "base.html" %}
+
+{% block title %}Crear Nueva Vacante - My Company{% endblock %}
+
+{% block extra_js %}
+  <script src='https://cdn.tiny.cloud/1/YOUR_API_KEY/tinymce/5/tinymce.min.js' referrerpolicy="origin"></script>
+  <script>
+    tinymce.init({
+      selector: '#detalle',
+      plugins: "textcolor, table",
+      toolbar: "styleselect | undo redo | removeformat | bold italic underline | table | aligncenter alignjustify | bullist numlist outdent indent | link | print | fontselect fontsizeselect forecolor backcolor",
+      height: 300
+    });
+  </script>
+{% endblock %}
+
+{% block content %}
+  <!-- The justified navigation menu -->
+  <div class="masthead">
+    <h3 class="text-muted">My Company - Administración</h3>
+    <nav>
+      <ul class="nav nav-justified">
+        <li><a href="{{ url_for('nueva_vacante') }}">Crear Vacante</a></li>            
+        <li><a href="{{ url_for('vacantes') }}">Vacantes</a></li>                        
+        <li><a href="{{ url_for('logout') }}">Salir</a></li>            
+      </ul>
+    </nav>
+  </div>
+
+  <br>    
+  <div class="panel panel-default">
+    <div class="panel-heading">
+      <h3 class="panel-title">{% if edit_mode %}Editar{% else %}Crear{% endif %} Vacante</h3>
+    </div>
+    <div class="panel-body">
+     <form action="{{ url_for('nueva_vacante') }}" method="post">
+        {% if edit_mode %}
+          <input type="hidden" name="vacante_id" value="{{ vacante.id }}">
+        {% endif %}
+        
+        <div class="form-group">
+          <label for="nombre">Nombre</label>
+          <input type="text" class="form-control" name="nombre" required id="nombre" 
+                 value="{{ vacante.nombre if edit_mode else '' }}" placeholder="Escriba el nombre la vacante">
+        </div>                   
+        <div class="form-group">
+          <label for="descripcion">Descripción</label>
+          <textarea class="form-control" name="descripcion" id="descripcion" required rows="3" 
+                    placeholder="Escribe una descripción de la vacante">{{ vacante.descripcion if edit_mode else '' }}</textarea>
+        </div>
+        <div class="form-group">
+          <label for="detalle">Escriba los detalles</label>
+          <textarea class="form-control" name="detalle" id="detalle" rows="4" 
+                    placeholder="Escriba los detalles de la vacante">{{ vacante.detalle if edit_mode else '' }}</textarea>
+        </div>
+        <button type="submit" class="btn btn-primary">{% if edit_mode %}Actualizar{% else %}Guardar{% endif %}</button>
+        <a href="{{ url_for('vacantes') }}" class="btn btn-default">Cancelar</a>
+      </form>
+    </div>
+  </div>
+{% endblock %}

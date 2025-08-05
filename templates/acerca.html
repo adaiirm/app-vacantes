@@ -1,0 +1,33 @@
+{% extends "base.html" %}
+
+{% block title %}My Company - Acerca{% endblock %}
+
+{% block content %}
+  <!-- The justified navigation menu -->
+  <div class="masthead">
+    <h3 class="text-muted">My Company</h3>
+    <nav>
+      <ul class="nav nav-justified">
+        <li><a href="{{ url_for('index') }}">Inicio</a></li>            
+        <li><a href="{{ url_for('admin') if 'user_id' in session else url_for('login') }}">Administración</a></li>                        
+        <li><a href="{{ url_for('acerca') }}">Acerca</a></li>            
+      </ul>
+    </nav>
+  </div>
+
+  <!-- Jumbotron -->
+  <div class="jumbotron">
+    <h2>ACERCA</h2>
+    <p class="lead text-justify">
+      My Company es una plataforma especializada en la conexión entre talento y oportunidades laborales. 
+      Fundada en 2016, nos hemos dedicado a facilitar el proceso de reclutamiento tanto para empresas 
+      como para profesionales. Nuestra misión es crear un puente eficiente entre las necesidades 
+      empresariales y las aspiraciones profesionales.
+    </p>
+    <p class="lead text-justify">
+      Contamos con un equipo de expertos en recursos humanos y tecnología que trabajan para ofrecer 
+      la mejor experiencia a nuestros usuarios. Nuestros valores incluyen transparencia, eficiencia 
+      y compromiso con el desarrollo profesional.
+    </p>
+  </div>
+{% endblock %}
