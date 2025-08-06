@@ -1,0 +1,38 @@
+# Python
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+*.pyc
+*.env
+.env
+
+# Virtual environments
+env/
+venv/
+ENV/
+
+# Database
+*.db
+*.sqlite3
+
+# VS Code
+.vscode/
+
+# Jupyter Notebooks
+*.ipynb
+
+# System files
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
+
+# Others
+*.bak
+*.swp
+*.swo
+
+# Node modules (if any)
+node_modules/

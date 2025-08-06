@@ -8,9 +8,9 @@
     <h3 class="text-muted">My Company - Administración</h3>
     <nav>
       <ul class="nav nav-justified">
-        <li><a href="{{ url_for('nueva_vacante') }}">Crear Vacante</a></li>            
-        <li><a href="{{ url_for('vacantes') }}">Vacantes</a></li>                           
-        <li><a href="{{ url_for('logout') }}">Salir</a></li>            
+        <li><a href="{{ url_for('vacante.nueva_vacante') }}">Crear Vacante</a></li>
+        <li><a href="{{ url_for('vacante.vacantes') }}">Vacantes</a></li>
+        <li><a href="{{ url_for('auth.logout') }}">Salir</a></li>
       </ul>
     </nav>
   </div>

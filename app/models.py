@@ -1,19 +1,49 @@
 from flask_sqlalchemy import SQLAlchemy
+# Importa funciones para manejo seguro de contraseñas
+from werkzeug.security import generate_password_hash, check_password_hash
+# Importa clase para manejar fechas
+from datetime import datetime
 
-db = SQLAlchemy()
+db = SQLAlchemy()  # Instancia principal para manejar la base de datos
 
 class Usuario(db.Model):
-    id = db.Column(db.Integer, primary_key=True)
-    username = db.Column(db.String(80), unique=True, nullable=False)
-    email = db.Column(db.String(120), unique=True, nullable=False)
-    password = db.Column(db.String(128), nullable=False)
-    perfil = db.Column(db.String(50))
-    estatus = db.Column(db.String(20))
+    """
+    Modelo para usuarios del sistema.
+    Almacena información básica y credenciales.
+    """
+    __tablename__ = 'usuarios'  # Nombre de la tabla en la base de datos
+    
+    id = db.Column(db.Integer, primary_key=True)  # Identificador único
+    username = db.Column(db.String(50), unique=True, nullable=False)  # Nombre de usuario
+    email = db.Column(db.String(100), unique=True, nullable=False)  # Correo electrónico
+    password = db.Column(db.String(200), nullable=False)  # Contraseña encriptada
+    perfil = db.Column(db.String(50), nullable=False, default='Usuario')  # Rol del usuario
+    estatus = db.Column(db.String(20), nullable=False, default='Activo')  # Estado del usuario
+    fecha_registro = db.Column(db.DateTime, nullable=False, default=datetime.now)  # Fecha de registro
+    vacantes = db.relationship('Vacante', backref='autor', lazy=True)  # Relación con vacantes creadas
+    
+    def set_password(self, password):
+        """Genera y almacena el hash de la contraseña."""
+        self.password = generate_password_hash(password)
+    
+    def check_password(self, password):
+        """Verifica si la contraseña proporcionada es correcta."""
+        return check_password_hash(self.password, password)
 
 class Vacante(db.Model):
-    id = db.Column(db.Integer, primary_key=True)
-    nombre = db.Column(db.String(100))
-    descripcion = db.Column(db.Text)
-    detalle = db.Column(db.Text)
-    fecha_publicacion = db.Column(db.DateTime)
-    usuario_id = db.Column(db.Integer, db.ForeignKey('usuario.id'))
+    """
+    Modelo para vacantes publicadas por los usuarios.
+    Almacena información relevante de cada vacante.
+    """
+    __tablename__ = 'vacantes'  # Nombre de la tabla en la base de datos
+    
+    id = db.Column(db.Integer, primary_key=True)  # Identificador único
+    nombre = db.Column(db.String(100), nullable=False)  # Título de la vacante
+    descripcion = db.Column(db.Text, nullable=False)  # Descripción general
+    detalle = db.Column(db.Text)  # Detalles adicionales
+    fecha_publicacion = db.Column(db.DateTime, nullable=False, default=datetime.now)  # Fecha de publicación
+    usuario_id = db.Column(db.Integer, db.ForeignKey('usuarios.id'), nullable=False)  # Autor de la vacante
+    
+    def __repr__(self):
+        """Representación legible de la vacante."""
+        return f'<Vacante {self.nombre}>'

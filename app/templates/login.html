@@ -12,7 +12,7 @@
       <img src="{{ url_for('static', filename='images/lock.png') }}"><br>
       <h4>Demo</h4>        
     </center>        
-    <form class="form-signin" method="post" action="{{ url_for('login') }}">
+    <form class="form-signin" method="post" action="{{ url_for('auth.login') }}">
       <h2 class="form-signin-heading">Ingreso al sistema</h2>
       <label for="user" class="sr-only">Nombre de usuario</label>
       <input type="text" id="user" name="user" class="form-control" placeholder="Escriba nombre de usuario" required autofocus>

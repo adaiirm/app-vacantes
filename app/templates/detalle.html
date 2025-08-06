@@ -8,14 +8,14 @@
     <h3 class="text-muted">My Company</h3>
     <nav>
       <ul class="nav nav-justified">
-        <li><a href="{{ url_for('index') }}">Inicio</a></li>            
-        <li><a href="{{ url_for('admin') if 'user_id' in session else url_for('login') }}">Administración</a></li>                        
-        <li><a href="{{ url_for('acerca') }}">Acerca</a></li>            
+        <li><a href="{{ url_for('main.index') }}">Inicio</a></li>
+        <li><a href="{{ url_for('main.admin') if 'user_id' in session else url_for('auth.login') }}">Administración</a></li>
+        <li><a href="{{ url_for('main.acerca') }}">Acerca</a></li>
       </ul>
     </nav>
   </div>
   
-  <form method="get" action="{{ url_for('buscar') }}" class="navbar-form navbar-right">
+  <form method="get" action="{{ url_for('vacante.buscar') }}" class="navbar-form navbar-right">
     <div class="form-group">
       <input type="text" name="query" required placeholder="Buscar oferta..." class="form-control">
     </div>        
@@ -46,8 +46,8 @@
       {% if 'user_id' in session and session['user_id'] == vacante.usuario_id %}
         <hr>
         <div class="text-right">
-          <a href="{{ url_for('nueva_vacante') }}?edit={{ vacante.id }}" class="btn btn-warning">Editar</a>
-          <a href="{{ url_for('eliminar_vacante', id=vacante.id) }}" class="btn btn-danger" onclick="return confirm('¿Estás seguro de eliminar esta vacante?')">Eliminar</a>
+          <a href="{{ url_for('vacante.nueva_vacante') }}?edit={{ vacante.id }}" class="btn btn-warning">Editar</a>
+          <a href="{{ url_for('vacante.eliminar_vacante', id=vacante.id) }}" class="btn btn-danger" onclick="return confirm('¿Estás seguro de eliminar esta vacante?')">Eliminar</a>
         </div>
       {% endif %}
     </div>

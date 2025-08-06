@@ -1,11 +1,17 @@
 from flask import Blueprint, render_template, request, redirect, url_for, flash, session
+# Importa modelo y base de datos
 from ..models import db, Vacante
+# Para mostrar fecha/hora en plantillas
 from datetime import datetime
 
-vacante_bp = Blueprint('vacante', __name__)
+vacante_bp = Blueprint('vacante', __name__)  # Blueprint para rutas de vacantes
 
 @vacante_bp.route('/vacantes')
 def vacantes():
+    """
+    Vista para mostrar todas las vacantes.
+    Solo accesible para usuarios autenticados.
+    """
     if 'user_id' not in session:
         flash('Debes iniciar sesión para acceder a esta página', 'warning')
         return redirect(url_for('auth.login'))
@@ -15,6 +21,10 @@ def vacantes():
 
 @vacante_bp.route('/vacante/nueva', methods=['GET', 'POST'])
 def nueva_vacante():
+    """
+    Vista para crear una nueva vacante.
+    Solo accesible para usuarios autenticados.
+    """
     if 'user_id' not in session:
         flash('Debes iniciar sesión para acceder a esta página', 'warning')
         return redirect(url_for('auth.login'))
@@ -43,11 +53,18 @@ def nueva_vacante():
 
 @vacante_bp.route('/vacante/<int:id>')
 def detalle_vacante(id):
+    """
+    Vista para mostrar el detalle de una vacante específica.
+    """
     vacante = Vacante.query.get_or_404(id)
     return render_template('detalle.html', vacante=vacante, datetime=datetime)
 
 @vacante_bp.route('/vacante/eliminar/<int:id>')
 def eliminar_vacante(id):
+    """
+    Vista para eliminar una vacante.
+    Solo accesible para usuarios autenticados.
+    """
     if 'user_id' not in session:
         flash('Debes iniciar sesión para acceder a esta página', 'warning')
         return redirect(url_for('auth.login'))
@@ -60,6 +77,10 @@ def eliminar_vacante(id):
 
 @vacante_bp.route('/vacante/editar', methods=['GET', 'POST'])
 def editar_vacante():
+    """
+    Vista para editar una vacante existente.
+    Solo accesible para el autor de la vacante autenticado.
+    """
     if 'user_id' not in session:
         flash('Debes iniciar sesión para acceder a esta página', 'warning')
         return redirect(url_for('auth.login'))
@@ -89,6 +110,9 @@ def editar_vacante():
 
 @vacante_bp.route('/buscar')
 def buscar():
+    """
+    Vista para buscar vacantes por nombre o descripción.
+    """
     query = request.args.get('query', '')
     if query:
         resultados = Vacante.query.filter(
@@ -101,6 +125,9 @@ def buscar():
 
 @vacante_bp.route('/mensaje')
 def mostrar_mensaje():
+    """
+    Vista para mostrar mensajes personalizados en la aplicación.
+    """
     tipo = request.args.get('tipo', 'info')
     titulo = request.args.get('titulo', 'Mensaje del Sistema')
     contenido = request.args.get('contenido', '')
