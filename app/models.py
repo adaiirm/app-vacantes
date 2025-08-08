@@ -22,13 +22,13 @@ class Usuario(db.Model):
     fecha_registro = db.Column(db.DateTime, nullable=False, default=datetime.now)  # Fecha de registro
     vacantes = db.relationship('Vacante', backref='autor', lazy=True)  # Relación con vacantes creadas
     
-    def set_password(self, password):
-        """Genera y almacena el hash de la contraseña."""
-        self.password = generate_password_hash(password)
+    # def set_password(self, password):
+    #     """Genera y almacena el hash de la contraseña."""
+    #     self.password = generate_password_hash(password)
     
-    def check_password(self, password):
-        """Verifica si la contraseña proporcionada es correcta."""
-        return check_password_hash(self.password, password)
+    # def check_password(self, password):
+    #     """Verifica si la contraseña proporcionada es correcta."""
+    #     return check_password_hash(self.password, password)
 
 class Vacante(db.Model):
     """

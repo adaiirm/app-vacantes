@@ -46,7 +46,7 @@
       {% if 'user_id' in session and session['user_id'] == vacante.usuario_id %}
         <hr>
         <div class="text-right">
-          <a href="{{ url_for('vacante.nueva_vacante') }}?edit={{ vacante.id }}" class="btn btn-warning">Editar</a>
+          <a href="{{ url_for('vacante.editar_vacante') }}?edit={{ vacante.id }}" class="btn btn-warning">Editar</a>
           <a href="{{ url_for('vacante.eliminar_vacante', id=vacante.id) }}" class="btn btn-danger" onclick="return confirm('¿Estás seguro de eliminar esta vacante?')">Eliminar</a>
         </div>
       {% endif %}

@@ -47,7 +47,7 @@
       <h3 class="panel-title">{% if edit_mode %}Editar{% else %}Crear{% endif %} Vacante</h3>
     </div>
     <div class="panel-body">
-     <form action="{{ url_for('vacante.nueva_vacante') }}" method="post">
+     <form action="{{ url_for('vacante.editar_vacante') if edit_mode else url_for('vacante.nueva_vacante') }}" method="post">
         {% if edit_mode %}
           <input type="hidden" name="vacante_id" value="{{ vacante.id }}">
         {% endif %}

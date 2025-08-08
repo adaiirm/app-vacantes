@@ -31,7 +31,7 @@ def login():
             flash('Usuario o contraseña incorrectos', 'danger')
 
     # Renderiza el formulario de login
-    return render_template('login.html', datetime=datetime)
+    return render_template('login.html')
 
 @auth_bp.route('/logout')
 def logout():

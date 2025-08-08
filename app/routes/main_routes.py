@@ -13,14 +13,14 @@ def index():
     Muestra las 3 vacantes más recientes.
     """
     vacantes = Vacante.query.order_by(Vacante.fecha_publicacion.desc()).limit(3).all()
-    return render_template('index.html', vacantes=vacantes, datetime=datetime)
+    return render_template('index.html', vacantes=vacantes)
 
 @main_bp.route('/acerca')
 def acerca():
     """
     Vista de la página 'Acerca de'.
     """
-    return render_template('acerca.html', datetime=datetime)
+    return render_template('acerca.html')
 
 @main_bp.route('/admin')
 def admin():
@@ -33,4 +33,4 @@ def admin():
         return redirect(url_for('auth.login'))
 
     usuario = Usuario.query.get(session['user_id'])  # Obtiene el usuario actual
-    return render_template('admin.html', usuario=usuario, datetime=datetime)
+    return render_template('admin.html', usuario=usuario)

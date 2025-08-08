@@ -8,9 +8,9 @@
     <h3 class="text-muted">My Company</h3>
     <nav>
       <ul class="nav nav-justified">
-        <li><a href="{{ url_for('main.index') }}">Inicio</a></li>
-        <li><a href="{{ url_for('main.admin') if 'user_id' in session else url_for('auth.login') }}">Administración</a></li>
-        <li><a href="{{ url_for('main.acerca') }}">Acerca</a></li>
+        <li><a href="{{ url_for('vacante.nueva_vacante') }}">Crear Vacante</a></li>
+        <li><a href="{{ url_for('vacante.vacantes') }}">Vacantes</a></li>
+        <li><a href="{{ url_for('auth.logout') }}">Salir</a></li>
       </ul>
     </nav>
   </div>

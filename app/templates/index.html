@@ -32,7 +32,7 @@
       Es muy fácil de usar, solo haz clic en una vacante, ingresa para ver los detalles y envíanos tu CV en formato 
       PDF o DOCX. Nosotros revisaremos tu CV y posteriormente te contactaremos.
     </p>
-    <p><a class="btn btn-lg btn-success" href="{{ url_for('vacante.vacantes') }}" role="button">Ver más Ofertas</a></p>
+    <p><a class="btn btn-lg btn-success" href="{{ url_for('vacante.todas_vacantes') }}" role="button">Ver más Ofertas</a></p>
   </div>
 
   <h1>Ofertas recientes</h1>
@@ -42,13 +42,13 @@
     {% for vacante in vacantes %}
     <div class="col-lg-4">
       <h2>{{ vacante.nombre }}</h2>
-      <p class="text-justify">{{ vacante.descripcion[:150] }}...</p>
+|      <p class="text-justify">{{ vacante.descripcion[:150] }}</p>
       <p><a class="btn btn-primary" href="{{ url_for('vacante.detalle_vacante', id=vacante.id) }}" role="button">Ver detalles &raquo;</a></p>
     </div>
     {% else %}
     <div class="col-lg-12">
       <p>No hay vacantes disponibles en este momento.</p>
-    </div>
+    </div>d
     {% endfor %}
   </div>
 {% endblock %}

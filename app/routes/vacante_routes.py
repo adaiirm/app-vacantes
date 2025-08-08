@@ -17,7 +17,16 @@ def vacantes():
         return redirect(url_for('auth.login'))
 
     todas_vacantes = Vacante.query.order_by(Vacante.fecha_publicacion.desc()).all()
-    return render_template('vacantes.html', vacantes=todas_vacantes, datetime=datetime, mensaje=None)
+    return render_template('vacantes.html', vacantes=todas_vacantes, mensaje=None)
+
+# Ruta pública para ver todas las vacantes sin credenciales
+@vacante_bp.route('/todas_vacantes')
+def todas_vacantes():
+    """
+    Vista pública para mostrar todas las vacantes sin requerir inicio de sesión.
+    """
+    vacantes = Vacante.query.order_by(Vacante.fecha_publicacion.desc()).all()
+    return render_template('todas_vacantes.html', vacantes=vacantes)
 
 @vacante_bp.route('/vacante/nueva', methods=['GET', 'POST'])
 def nueva_vacante():
@@ -49,7 +58,7 @@ def nueva_vacante():
             flash('Vacante creada exitosamente', 'success')
             return redirect(url_for('vacante.vacantes'))
 
-    return render_template('frmvacante.html', datetime=datetime)
+    return render_template('frmvacante.html')
 
 @vacante_bp.route('/vacante/<int:id>')
 def detalle_vacante(id):
@@ -57,7 +66,7 @@ def detalle_vacante(id):
     Vista para mostrar el detalle de una vacante específica.
     """
     vacante = Vacante.query.get_or_404(id)
-    return render_template('detalle.html', vacante=vacante, datetime=datetime)
+    return render_template('detalle.html', vacante=vacante)
 
 @vacante_bp.route('/vacante/eliminar/<int:id>')
 def eliminar_vacante(id):
@@ -106,7 +115,7 @@ def editar_vacante():
         flash('Vacante actualizada exitosamente', 'success')
         return redirect(url_for('vacante.detalle_vacante', id=vacante.id))
 
-    return render_template('frmvacante.html', vacante=vacante, edit_mode=True, datetime=datetime)
+    return render_template('frmvacante.html', vacante=vacante, edit_mode=True)
 
 @vacante_bp.route('/buscar')
 def buscar():
@@ -121,7 +130,7 @@ def buscar():
     else:
         resultados = []
 
-    return render_template('vacantes.html', vacantes=resultados, busqueda=query, datetime=datetime, mensaje=None)
+    return render_template('todas_vacantes.html', vacantes=resultados, busqueda=query, mensaje=None)
 
 @vacante_bp.route('/mensaje')
 def mostrar_mensaje():
@@ -144,4 +153,4 @@ def mostrar_mensaje():
         'texto_enlace': texto_enlace
     }
 
-    return render_template('mensaje.html', mensaje=mensaje, datetime=datetime)
+    return render_template('mensaje.html', mensaje=mensaje)
