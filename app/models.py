@@ -11,7 +11,7 @@ class Usuario(db.Model):
     Modelo para usuarios del sistema.
     Almacena información básica y credenciales.
     """
-    __tablename__ = 'usuarios'  # Nombre de la tabla en la base de datos
+    #__tablename__ = 'usuarios'  # Nombre de la tabla en la base de datos
     
     id = db.Column(db.Integer, primary_key=True)  # Identificador único
     username = db.Column(db.String(50), unique=True, nullable=False)  # Nombre de usuario
@@ -35,7 +35,7 @@ class Vacante(db.Model):
     Modelo para vacantes publicadas por los usuarios.
     Almacena información relevante de cada vacante.
     """
-    __tablename__ = 'vacantes'  # Nombre de la tabla en la base de datos
+    #__tablename__ = 'vacantes'  # Nombre de la tabla en la base de datos
     
     id = db.Column(db.Integer, primary_key=True)  # Identificador único
     nombre = db.Column(db.String(100), nullable=False)  # Título de la vacante
